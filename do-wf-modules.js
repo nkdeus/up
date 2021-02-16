@@ -288,7 +288,7 @@ window.WFmodules = {
     
 
     var consoleCss;
-    doautotheme = $scope;
+    window.WFmodules.doautotheme = $scope;
     $scope.colors = [];
     var inputUrl = $("#imageUrl");
     inputUrl.focusout(function() {
@@ -353,8 +353,8 @@ window.WFmodules = {
       //$('html').css("--contraste-color",$scope.swatches['Muted'].getTitleTextColor());
       
        var i;
-       for (i = 0; i < dothemes.length; ++i) {
-            var cItem = dothemes[i];
+       for (i = 0; i < window.WFmodules.dothemes.length; ++i) {
+            var cItem = window.WFmodules.dothemes[i];
             cItem.pushColors($scope.colors);
        }
         
@@ -370,9 +370,9 @@ window.WFmodules = {
       
       var i;
       var consoleCss = ":root {<br>"
-      for (i = 0; i < dothemes.length; ++i) {
+      for (i = 0; i < window.WFmodules.dothemes.length; ++i) {
 
-          var cItem = dothemes[i];
+          var cItem = window.WFmodules.dothemes[i];
           consoleCss += cItem.getCssLine();
          
        }
@@ -490,7 +490,7 @@ window.WFmodules = {
           }, timeOutDelay);  
         
           //$('#console').append($scope.getCssLine());
-          doautotheme.doconsole();
+          window.WFmodules.doautotheme.doconsole();
       
       });
     
