@@ -469,7 +469,7 @@ window.WFmodules = {
     
       $scope.changeSelectedColor = function(type, color){
        
-        var cssVar = "--"+type+'-color';
+        var cssVar = "--"+type;
         if($($scope).attr("data-custom-target") != undefined){
             $($($scope).attr("data-custom-target")).css(cssVar, color);
         }else{
