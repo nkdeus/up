@@ -340,24 +340,6 @@
   transition: background-color 0.2s, color 0.2s;
 }
 
-[data-bt-action] {
-  display: inline-block;
-  border-radius: 0.2rem;
-  text-transform: uppercase;
-  padding: 1rem;
-  border: 1px solid var(--second-color);
-  cursor: pointer;
-  box-shadow: 0.5rem 0.5rem 0.4rem rgba(0, 0, 0, 0.1);
-  transition: all 0.3s;
-}
-
-.palette-container [data-bt-action] {
-  font-size: 0px;
-  border-radius: 100%;
-  width: 3rem;
-  height: 3rem;
-}
-
 [data-do-bg], [data-do-txt] {
   transition: all 0.3s;
 }
