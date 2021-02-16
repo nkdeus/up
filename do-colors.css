@@ -372,6 +372,10 @@
   display: flex;
   position: relative;
   z-index: 12;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 [data-colors-container] {
