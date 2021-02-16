@@ -228,14 +228,18 @@ window.WFmodules = {
   	return this;
 
   },
-  dotoggle:function(){
+   dotoggle:function(){
     const $scope = this;
-    const $parent = $($scope).parent();
+    const isGlobal = $($scope).attr('data-global') == "true";
+    var $parent = $($scope).parent();
+    if(isGlobal){
+      $parent = $("html");
+    }
     const actionToggleAdd = $($scope ).attr('data-bt-toggle-add');
     const actionToggleRemove = $($scope ).attr('data-bt-toggle-remove');
     var datas = null;
     var toggleSens = true;
-     if(actionToggleAdd != undefined){
+    if(actionToggleAdd != undefined){
         
        datas = $($scope).attr('data-bt-toggle-add').split(',');
        toggleSens = true;
@@ -260,20 +264,25 @@ window.WFmodules = {
 
     });
     $scope.toggle = function(){
-      console.log("?? ?? ",$scope.toggles[active]);
+      
        if($scope.toggles[active] == undefined){
           $scope.toggles[active] = toggleSens;
         }
-      
+        
         $scope.toggles[active] = !$scope.toggles[active];
+
         $($scope).toggleClass(active);
+        if($scope.toggles[active]){
+           target.removeClass(classToggle);   
+        }else{
+           target.addClass(classToggle);          
+        }
+
+      
         console.log("TOGGLE ",classToggle,$scope.toggles[active]);
-        target.toggleClass(classToggle);
     }
    
-    if(toggleSens == false){
-      $scope.toggle();
-    }
+
     //
 
 
