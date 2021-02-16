@@ -746,11 +746,11 @@
 }
 
 #imgContainer img {
-  width: 100%;
+  width: 10%;
   min-height: 100%;
   margin-left: 0rem;
-  object-fit: none;
-  object-position: 50% 31.5%;
+  object-fit: cover;
+  object-position: 50% 50%;
 }
 
 [data-do-trigger=true].active {
