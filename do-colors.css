@@ -362,9 +362,14 @@
   transition: all 0.3s;
 }
 
-[data-bt-action].active {
+[data-active].active {
   background-color: var(--main2-color) !important;
   color: var(--contraste-color) !important;
+}
+
+.hide{
+  display:none !important;
+  pointer-events:none;
 }
 
 #container-colors {
