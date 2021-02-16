@@ -288,7 +288,7 @@ window.WFmodules = {
     
 
     var consoleCss;
-    window.WFmodules.doautotheme = $scope;
+    window.doautotheme = $scope;
     $scope.colors = [];
     var inputUrl = $("#imageUrl");
     inputUrl.focusout(function() {
@@ -353,13 +353,13 @@ window.WFmodules = {
       //$('html').css("--contraste-color",$scope.swatches['Muted'].getTitleTextColor());
       
        var i;
-       for (i = 0; i < window.WFmodules.dothemes.length; ++i) {
-            var cItem = window.WFmodules.dothemes[i];
+       for (i = 0; i < window.dothemes.length; ++i) {
+            var cItem = window.dothemes[i];
             cItem.pushColors($scope.colors);
        }
         
        //$('[data-module=dotheme]').pushColors($scope.colors);
-       // window.WFmodules.dotheme().pushColors($scope.colors);
+       // window.dotheme().pushColors($scope.colors);
        //list.appendChild(listFragment);
 
     }
@@ -370,9 +370,9 @@ window.WFmodules = {
       
       var i;
       var consoleCss = ":root {<br>"
-      for (i = 0; i < window.WFmodules.dothemes.length; ++i) {
+      for (i = 0; i < window.dothemes.length; ++i) {
 
-          var cItem = window.WFmodules.dothemes[i];
+          var cItem = window.dothemes[i];
           consoleCss += cItem.getCssLine();
          
        }
@@ -490,7 +490,7 @@ window.WFmodules = {
           }, timeOutDelay);  
         
           //$('#console').append($scope.getCssLine());
-          window.WFmodules.doautotheme.doconsole();
+          window.doautotheme.doconsole();
       
       });
     
