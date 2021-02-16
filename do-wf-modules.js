@@ -59,7 +59,7 @@ window.WFmodules = {
       if(offset == undefined){
          return;
       }
-  	  var cssVar = "--"+btData.attr('data-color-type')+'-color';
+  	  var cssVar = "--"+btData.attr('data-color-type');
   	 
   	  var color = getRandomColor(offset);
       $($scope).css(cssVar, color);
