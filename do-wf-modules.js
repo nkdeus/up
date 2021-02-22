@@ -59,9 +59,10 @@ window.WFmodules = {
       if(offset == undefined){
          return;
       }
-  	  var cssVar = "--"+btData.attr('data-color-type');
+  	  var cssVar = "--"+btData.attr('data-bt-color');
   	 
   	  var color = getRandomColor(offset);
+     //console.log("??",cssVar);
       $($scope).css(cssVar, color);
 
     };
@@ -71,13 +72,13 @@ window.WFmodules = {
   	$scope.randomPlay = function(){
        
        if($scope.toggles['random']){         
-           $scope.changeColor("--main-color",190);
-           $scope.changeColor("--second-color",210);
-           $scope.changeColor("--contraste-color",60);
+           $scope.changeColor("--main",190);
+           $scope.changeColor("--second",210);
+           $scope.changeColor("--contraste",60);
          
-           $scope.changeColor("--main2-color",190);
-           $scope.changeColor("--second2-color",210);
-           $scope.changeColor("--contraste2-color",60);
+           $scope.changeColor("--main2",190);
+           $scope.changeColor("--second2",210);
+           $scope.changeColor("--contraste2",60);
            clearTimeout(timeOut);
            timeOut = setTimeout($scope.randomPlay, 1200);        
         }else{
@@ -235,8 +236,10 @@ window.WFmodules = {
     if(isGlobal){
       $parent = $("html");
     }
-    const actionToggleAdd = $($scope ).attr('data-bt-toggle-add');
-    const actionToggleRemove = $($scope ).attr('data-bt-toggle-remove');
+    const actionToggleAdd = $($scope).attr('data-bt-toggle-add');
+    const actionToggleRemove = $($scope).attr('data-bt-toggle-remove');
+    const actionToggleType = $($scope).attr('data-bt-type') || 'click';
+     console.log("?? ",actionToggleType);
     var datas = null;
     var toggleSens = true;
     if(actionToggleAdd != undefined){
@@ -252,13 +255,13 @@ window.WFmodules = {
 
     }
     const active = datas[0];
-    const target = $(datas[1], $parent);
-    const classToggle = datas[2];
+    const target = $(datas[1], $parent) || $scope;
+    const classToggle = datas[2] || active;
 
     
     $scope.toggles = {};
     
-    $($scope).on('click',$scope, function(e) {
+    $($scope).on(actionToggleType,$scope, function(e) {
           
          $scope.toggle();
 
@@ -292,19 +295,25 @@ window.WFmodules = {
     
     var $scope = this; 
     var paletteReady = false;
+    var urlInputPhoto = $("#imageUrl")[0] != undefined;
     var img = $("#theme-auto")[0];
-    var imgSrc = $("#theme-auto").attr('data-src');
+    var imgSrc = $("#theme-auto").attr('data-src') || $("#theme-auto").attr('src');
     
-
+    
+    console.log('urlInputPhoto',urlInputPhoto);
     var consoleCss;
     window.doautotheme = $scope;
     $scope.colors = [];
-    var inputUrl = $("#imageUrl");
-    inputUrl.focusout(function() {
+    
+    if(urlInputPhoto){
+        var inputUrl = $("#imageUrl");
+        inputUrl.focusout(function() {
+
+          $scope.forceLoad();
+
+        })
+    }
   
-      $scope.forceLoad();
-      
-    })
 
     $scope.getPalette = function(targetImg) {
 
@@ -354,7 +363,9 @@ window.WFmodules = {
       }else{
           $scope.colors.push('#FF0000');
           console.log("__error");
-           $scope.forceLoad();
+          $scope.colors = [];
+          $scope.forceLoad();
+          return;
       }
           
       //$('html').css("--main-color",$scope.swatches['Vibrant'].getHex());
@@ -404,19 +415,23 @@ window.WFmodules = {
     }
     $scope.forceLoad = function() {
        console.log('__forceLoad ',$('#imageUrl').val() == "");
+   
        var imgContainer = $('#imgContainer');
-        if($('#imageUrl').val() == ""){
+        if($('#imageUrl').val() == "" && urlInputPhoto){
             
             img.onload = $scope.imageLoaded();
         }else{
           
+          console.log("OK2")
+          
             if(img){
                img.remove();
-                img.onload = null;
-                img = null;
+               img.onload = null;
+               img = null;
             }
            
             var tmpImg = new Image();
+            var urlImg  = $('#imageUrl').val() || imgSrc;
   
             tmpImg.crossOrigin = "anonymous";
 
@@ -424,25 +439,35 @@ window.WFmodules = {
                 img = tmpImg;     
                 $scope.imageLoaded();
             } , false);
-
-            tmpImg.src = $('#imageUrl').val();
+  
+            tmpImg.src = urlImg;
             imgContainer.html(tmpImg);
+          
         }
     
 
     }
     
-    $('.hero-grid').click((e) => {
+   
+
+    
+    if(urlInputPhoto){
       
-     var R = window.innerWidth-Math.floor(window.innerWidth/10)-Math.floor(Math.random()*10);
-      $('#imageUrl').val(imgSrc+R.toString());
+        $('.hero-grid').click((e) => {    
+          var R = window.innerWidth-Math.floor(window.innerWidth/10)-Math.floor(Math.random()*10);
+          $('#imageUrl').val(imgSrc+R.toString());
+          e.preventDefault();
+          $scope.forceLoad();         
+        });
       
-      e.preventDefault();
+        var R = window.innerWidth-Math.floor(window.innerWidth/10)-Math.floor(Math.random()*10);
+        $('#imageUrl').val(imgSrc+R.toString());
+        $scope.forceLoad();
+      
+    }else{
+       console.log("OK");
       $scope.forceLoad();
-    });
-    var R = window.innerWidth-Math.floor(window.innerWidth/10)-Math.floor(Math.random()*10);
-    $('#imageUrl').val(imgSrc+R.toString());
-    $scope.forceLoad();
+    }
 
     return $scope;
     
@@ -634,21 +659,28 @@ window.WFmodules = {
      
      var $scope = this; 
      $scope.toggle = $($scope).attr("data-do-trigger") == "true";
-
+     $scope.target = $($scope).attr("data-do-target");
+     $scope.classToggle = $($scope).attr("data-do-class");
+     
      //var customTarget = $($scope).attr("data-do-trigger") == "true";
     
-     //console.log("toggle ",$scope.toggle);
+     
   
      ScrollTrigger.create({
       trigger: $scope,
       start: 'bottom bottom-=10%',
-      end: 'top top+=10%',
+      end: 'top top-=10%',
  
       onToggle: function(){
         $scope.toggle = !$scope.toggle;
         $($scope).toggleClass("active");
          //console.log("toggle ",$scope.toggle);
         $($scope).attr("data-do-trigger", $scope.toggle);
+        
+        if($scope.target){
+          //console.log("target ", $scope.toggle, $scope.classToggle);
+          $($scope.target).toggleClass($scope.classToggle);
+        }
       },
     });
     
