@@ -2,203 +2,479 @@
   --main: #de1836;
   --second: #e8e5e7;
   --contraste: #262625;
-  --main2: #18d7bb;
-  --second2: #FFFFFF;
-  --contraste2: #000000;
+  --extra: #18dec0;
   --main-color: var(--main);
   --second-color: var(--second);
   --contraste-color: var(--contraste);
+  --extra-color: var(--extra);
+}
+
+:root {
+  --main1: #b9142d;
+  --main1-color: var(--main1);
+}
+
+[data-do-bg='main1'] {
+  background-color: var(--main1-color) !important;
+}
+
+[data-do-txt='main1'] {
+  color: var(--main1-color) !important;
+}
+
+:root {
+  --main2: #941024;
   --main2-color: var(--main2);
-  --second2-color: var(--second2);
-  --contraste2-color: var(--contraste2);
 }
 
-[data-do-bg=main] {
-  background-color: var(--main-color) !important;
-}
-
-[data-do-txt=main] {
-  color: var(--main-color) !important;
-}
-
-[data-set-main=second] {
-  --main-color: var(--second) !important;
-}
-
-[data-do-hover=main-second]:hover {
-  background-color: var(--main-color) !important;
-  color: var(--second-color) !important;
-}
-
-[data-set-main=contraste] {
-  --main-color: var(--contraste) !important;
-}
-
-[data-do-hover=main-contraste]:hover {
-  background-color: var(--main-color) !important;
-  color: var(--contraste-color) !important;
-}
-
-[data-do-bg=second] {
-  background-color: var(--second-color) !important;
-}
-
-[data-do-txt=second] {
-  color: var(--second-color) !important;
-}
-
-[data-set-second=main] {
-  --second-color: var(--main) !important;
-}
-
-[data-do-hover=second-main]:hover {
-  background-color: var(--second-color) !important;
-  color: var(--main-color) !important;
-}
-
-[data-set-second=contraste] {
-  --second-color: var(--contraste) !important;
-}
-
-[data-do-hover=second-contraste]:hover {
-  background-color: var(--second-color) !important;
-  color: var(--contraste-color) !important;
-}
-
-[data-do-bg=contraste] {
-  background-color: var(--contraste-color) !important;
-}
-
-[data-do-txt=contraste] {
-  color: var(--contraste-color) !important;
-}
-
-[data-set-contraste=main] {
-  --contraste-color: var(--main) !important;
-}
-
-[data-do-hover=contraste-main]:hover {
-  background-color: var(--contraste-color) !important;
-  color: var(--main-color) !important;
-}
-
-[data-set-contraste=second] {
-  --contraste-color: var(--second) !important;
-}
-
-[data-do-hover=contraste-second]:hover {
-  background-color: var(--contraste-color) !important;
-  color: var(--second-color) !important;
-}
-
-[data-do-bg=main2] {
+[data-do-bg='main2'] {
   background-color: var(--main2-color) !important;
 }
 
-[data-do-txt=main2] {
+[data-do-txt='main2'] {
   color: var(--main2-color) !important;
 }
 
-[data-set-main2=main] {
-  --main2-color: var(--main) !important;
+:root {
+  --main3: #700c1b;
+  --main3-color: var(--main3);
 }
 
-[data-do-hover=main2-main]:hover {
-  background-color: var(--main2-color) !important;
+[data-do-bg='main3'] {
+  background-color: var(--main3-color) !important;
+}
+
+[data-do-txt='main3'] {
+  color: var(--main3-color) !important;
+}
+
+:root {
+  --main4: #4b0812;
+  --main4-color: var(--main4);
+}
+
+[data-do-bg='main4'] {
+  background-color: var(--main4-color) !important;
+}
+
+[data-do-txt='main4'] {
+  color: var(--main4-color) !important;
+}
+
+:root {
+  --main5: #260409;
+  --main5-color: var(--main5);
+}
+
+[data-do-bg='main5'] {
+  background-color: var(--main5-color) !important;
+}
+
+[data-do-txt='main5'] {
+  color: var(--main5-color) !important;
+}
+
+[data-do-bg='main'] {
+  background-color: var(--main-color) !important;
+}
+
+[data-do-txt='main'] {
   color: var(--main-color) !important;
 }
 
-[data-set-main2=second] {
-  --main2-color: var(--second) !important;
+[data-set-main='second'] {
+  --main-color: var(--second) !important;
 }
 
-[data-do-hover=main2-second]:hover {
-  background-color: var(--main2-color) !important;
+[data-do="main-second"] {
+  background-color: var(--main-color) !important;
   color: var(--second-color) !important;
 }
 
-[data-set-main2=contraste] {
-  --main2-color: var(--contraste) !important;
+[data-do-hover="main-second"]:hover {
+  background-color: var(--main-color) !important;
+  color: var(--second-color) !important;
 }
 
-[data-do-hover=main2-contraste]:hover {
-  background-color: var(--main2-color) !important;
+[data-set-main='contraste'] {
+  --main-color: var(--contraste) !important;
+}
+
+[data-do="main-contraste"] {
+  background-color: var(--main-color) !important;
   color: var(--contraste-color) !important;
 }
 
-[data-do-bg=second2] {
+[data-do-hover="main-contraste"]:hover {
+  background-color: var(--main-color) !important;
+  color: var(--contraste-color) !important;
+}
+
+[data-set-main='extra'] {
+  --main-color: var(--extra) !important;
+}
+
+[data-do="main-extra"] {
+  background-color: var(--main-color) !important;
+  color: var(--extra-color) !important;
+}
+
+[data-do-hover="main-extra"]:hover {
+  background-color: var(--main-color) !important;
+  color: var(--extra-color) !important;
+}
+
+:root {
+  --second1: #e1dbdd;
+  --second1-color: var(--second1);
+}
+
+[data-do-bg='second1'] {
+  background-color: var(--second1-color) !important;
+}
+
+[data-do-txt='second1'] {
+  color: var(--second1-color) !important;
+}
+
+:root {
+  --second2: #dbd0d3;
+  --second2-color: var(--second2);
+}
+
+[data-do-bg='second2'] {
   background-color: var(--second2-color) !important;
 }
 
-[data-do-txt=second2] {
+[data-do-txt='second2'] {
   color: var(--second2-color) !important;
 }
 
-[data-set-second2=main] {
-  --second2-color: var(--main) !important;
+:root {
+  --second3: #d5c4ca;
+  --second3-color: var(--second3);
 }
 
-[data-do-hover=second2-main]:hover {
-  background-color: var(--second2-color) !important;
-  color: var(--main-color) !important;
+[data-do-bg='second3'] {
+  background-color: var(--second3-color) !important;
 }
 
-[data-set-second2=second] {
-  --second2-color: var(--second) !important;
+[data-do-txt='second3'] {
+  color: var(--second3-color) !important;
 }
 
-[data-do-hover=second2-second]:hover {
-  background-color: var(--second2-color) !important;
+:root {
+  --second4: #cfb8bf;
+  --second4-color: var(--second4);
+}
+
+[data-do-bg='second4'] {
+  background-color: var(--second4-color) !important;
+}
+
+[data-do-txt='second4'] {
+  color: var(--second4-color) !important;
+}
+
+:root {
+  --second5: #caacb3;
+  --second5-color: var(--second5);
+}
+
+[data-do-bg='second5'] {
+  background-color: var(--second5-color) !important;
+}
+
+[data-do-txt='second5'] {
+  color: var(--second5-color) !important;
+}
+
+[data-do-bg='second'] {
+  background-color: var(--second-color) !important;
+}
+
+[data-do-txt='second'] {
   color: var(--second-color) !important;
 }
 
-[data-set-second2=contraste] {
-  --second2-color: var(--contraste) !important;
+[data-set-second='main'] {
+  --second-color: var(--main) !important;
 }
 
-[data-do-hover=second2-contraste]:hover {
-  background-color: var(--second2-color) !important;
+[data-do="second-main"] {
+  background-color: var(--second-color) !important;
+  color: var(--main-color) !important;
+}
+
+[data-do-hover="second-main"]:hover {
+  background-color: var(--second-color) !important;
+  color: var(--main-color) !important;
+}
+
+[data-set-second='contraste'] {
+  --second-color: var(--contraste) !important;
+}
+
+[data-do="second-contraste"] {
+  background-color: var(--second-color) !important;
   color: var(--contraste-color) !important;
 }
 
-[data-do-bg=contraste2] {
+[data-do-hover="second-contraste"]:hover {
+  background-color: var(--second-color) !important;
+  color: var(--contraste-color) !important;
+}
+
+[data-set-second='extra'] {
+  --second-color: var(--extra) !important;
+}
+
+[data-do="second-extra"] {
+  background-color: var(--second-color) !important;
+  color: var(--extra-color) !important;
+}
+
+[data-do-hover="second-extra"]:hover {
+  background-color: var(--second-color) !important;
+  color: var(--extra-color) !important;
+}
+
+:root {
+  --contraste1: #2c1417;
+  --contraste1-color: var(--contraste1);
+}
+
+[data-do-bg='contraste1'] {
+  background-color: var(--contraste1-color) !important;
+}
+
+[data-do-txt='contraste1'] {
+  color: var(--contraste1-color) !important;
+}
+
+:root {
+  --contraste2: #290b10;
+  --contraste2-color: var(--contraste2);
+}
+
+[data-do-bg='contraste2'] {
   background-color: var(--contraste2-color) !important;
 }
 
-[data-do-txt=contraste2] {
+[data-do-txt='contraste2'] {
   color: var(--contraste2-color) !important;
 }
 
-[data-set-contraste2=main] {
-  --contraste2-color: var(--main) !important;
+:root {
+  --contraste3: #22060a;
+  --contraste3-color: var(--contraste3);
 }
 
-[data-do-hover=contraste2-main]:hover {
-  background-color: var(--contraste2-color) !important;
+[data-do-bg='contraste3'] {
+  background-color: var(--contraste3-color) !important;
+}
+
+[data-do-txt='contraste3'] {
+  color: var(--contraste3-color) !important;
+}
+
+:root {
+  --contraste4: #190306;
+  --contraste4-color: var(--contraste4);
+}
+
+[data-do-bg='contraste4'] {
+  background-color: var(--contraste4-color) !important;
+}
+
+[data-do-txt='contraste4'] {
+  color: var(--contraste4-color) !important;
+}
+
+:root {
+  --contraste5: #0f0103;
+  --contraste5-color: var(--contraste5);
+}
+
+[data-do-bg='contraste5'] {
+  background-color: var(--contraste5-color) !important;
+}
+
+[data-do-txt='contraste5'] {
+  color: var(--contraste5-color) !important;
+}
+
+[data-do-bg='contraste'] {
+  background-color: var(--contraste-color) !important;
+}
+
+[data-do-txt='contraste'] {
+  color: var(--contraste-color) !important;
+}
+
+[data-set-contraste='main'] {
+  --contraste-color: var(--main) !important;
+}
+
+[data-do="contraste-main"] {
+  background-color: var(--contraste-color) !important;
   color: var(--main-color) !important;
 }
 
-[data-set-contraste2=second] {
-  --contraste2-color: var(--second) !important;
+[data-do-hover="contraste-main"]:hover {
+  background-color: var(--contraste-color) !important;
+  color: var(--main-color) !important;
 }
 
-[data-do-hover=contraste2-second]:hover {
-  background-color: var(--contraste2-color) !important;
+[data-set-contraste='second'] {
+  --contraste-color: var(--second) !important;
+}
+
+[data-do="contraste-second"] {
+  background-color: var(--contraste-color) !important;
   color: var(--second-color) !important;
 }
 
-[data-set-contraste2=contraste] {
-  --contraste2-color: var(--contraste) !important;
+[data-do-hover="contraste-second"]:hover {
+  background-color: var(--contraste-color) !important;
+  color: var(--second-color) !important;
 }
 
-[data-do-hover=contraste2-contraste]:hover {
-  background-color: var(--contraste2-color) !important;
+[data-set-contraste='extra'] {
+  --contraste-color: var(--extra) !important;
+}
+
+[data-do="contraste-extra"] {
+  background-color: var(--contraste-color) !important;
+  color: var(--extra-color) !important;
+}
+
+[data-do-hover="contraste-extra"]:hover {
+  background-color: var(--contraste-color) !important;
+  color: var(--extra-color) !important;
+}
+
+:root {
+  --extra1: rgba(66, 220, 196, 0.85);
+  --extra1-color: var(--extra1);
+}
+
+[data-do-bg='extra1'] {
+  background-color: var(--extra1-color) !important;
+}
+
+[data-do-txt='extra1'] {
+  color: var(--extra1-color) !important;
+}
+
+:root {
+  --extra2: rgba(111, 215, 199, 0.7);
+  --extra2-color: var(--extra2);
+}
+
+[data-do-bg='extra2'] {
+  background-color: var(--extra2-color) !important;
+}
+
+[data-do-txt='extra2'] {
+  color: var(--extra2-color) !important;
+}
+
+:root {
+  --extra3: rgba(150, 215, 205, 0.55);
+  --extra3-color: var(--extra3);
+}
+
+[data-do-bg='extra3'] {
+  background-color: var(--extra3-color) !important;
+}
+
+[data-do-txt='extra3'] {
+  color: var(--extra3-color) !important;
+}
+
+:root {
+  --extra4: rgba(185, 219, 214, 0.4);
+  --extra4-color: var(--extra4);
+}
+
+[data-do-bg='extra4'] {
+  background-color: var(--extra4-color) !important;
+}
+
+[data-do-txt='extra4'] {
+  color: var(--extra4-color) !important;
+}
+
+:root {
+  --extra5: rgba(215, 229, 227, 0.25);
+  --extra5-color: var(--extra5);
+}
+
+[data-do-bg='extra5'] {
+  background-color: var(--extra5-color) !important;
+}
+
+[data-do-txt='extra5'] {
+  color: var(--extra5-color) !important;
+}
+
+[data-do-bg='extra'] {
+  background-color: var(--extra-color) !important;
+}
+
+[data-do-txt='extra'] {
+  color: var(--extra-color) !important;
+}
+
+[data-set-extra='main'] {
+  --extra-color: var(--main) !important;
+}
+
+[data-do="extra-main"] {
+  background-color: var(--extra-color) !important;
+  color: var(--main-color) !important;
+}
+
+[data-do-hover="extra-main"]:hover {
+  background-color: var(--extra-color) !important;
+  color: var(--main-color) !important;
+}
+
+[data-set-extra='second'] {
+  --extra-color: var(--second) !important;
+}
+
+[data-do="extra-second"] {
+  background-color: var(--extra-color) !important;
+  color: var(--second-color) !important;
+}
+
+[data-do-hover="extra-second"]:hover {
+  background-color: var(--extra-color) !important;
+  color: var(--second-color) !important;
+}
+
+[data-set-extra='contraste'] {
+  --extra-color: var(--contraste) !important;
+}
+
+[data-do="extra-contraste"] {
+  background-color: var(--extra-color) !important;
+  color: var(--contraste-color) !important;
+}
+
+[data-do-hover="extra-contraste"]:hover {
+  background-color: var(--extra-color) !important;
   color: var(--contraste-color) !important;
 }
 
 .reverse {
-  --second-color: var(--contraste) !important;
-  --contraste-color: var(--second) !important;
+  --main-color: var(--second3) !important;
+  --second-color: var(--contraste5) !important;
+  --contraste-color: var(--second5) !important;
+  --extra-color: var(--main) !important;
+  --extra4-color: var(--main5) !important;
 }
 
 [data-do-bg], [data-do-txt] {
@@ -490,8 +766,18 @@
   max-height: 100%;
 }
 
-[data-do-trigger=true].active {
+[data-do-trigger="true"].active {
   text-decoration: underline;
+}
+
+.container-grid-colors {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.col-colors {
+  display: flex;
+  flex-direction: column;
 }
 
 .hero-grid {
