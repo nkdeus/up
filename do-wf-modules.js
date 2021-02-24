@@ -1,231 +1,7 @@
-/* Utils */
-
-getRandomColor = function(offset) {
-  
-  //console.log('offset',offset)
-      
-  if(offset < 100){
-    //sombre
-    var r = Math.floor(Math.random()*offset);
-    var colorR = r;
-    var colorG = r;
-    var colorB = r;
-  }else if(offset > 200){
-    //claire
-    var max = 255-offset;
-    var r = Math.floor(Math.random()*max);
-    var colorR =  Number(offset)+r;
-    var colorG =  Number(offset)+r;
-    var colorB =  Number(offset)+r;
-
-  }else{
-    //nice
-    var start = 255-offset;
-    var colorR = Number(start)+Math.floor(Math.random()*offset);
-    var colorG = Number(start)+Math.floor(Math.random()*offset);
-    var colorB = Number(start)+Math.floor(Math.random()*offset)
-  }
-	
-  var color  = "rgb(" + colorR + "," + colorG + "," + colorB + ")";
-  //console.log('color',color);
-  return color;
-  
-};
-
-
-  
 /* Start Head code */
 window.WFmodules = {
   docolor: function() {
-    
-    const $btActions = $('[data-bt-action]', this);
-    var $scope = this;
-    if($($scope).attr("data-custom-target") != undefined){
-      $scope = $($($scope).attr("data-custom-target"));
-    }
-    
-    var saveSecond = undefined;
-    var saveContraste = undefined;
-    
-    $scope.toggles = {
-      random : false,
-      nuit : false,
-      theme : false
-    }
 
-   $scope.changeColorByBt = function(btData){
-     
-      var offset = btData.attr('data-bt-color-offset');
-      if(offset == undefined){
-         return;
-      }
-  	  var cssVar = "--"+btData.attr('data-bt-color');
-  	 
-  	  var color = getRandomColor(offset);
-     //console.log("??",cssVar);
-      $($scope).css(cssVar, color);
-
-    };
-    
-    var timeOut = undefined;
-  
-  	$scope.randomPlay = function(){
-       
-       if($scope.toggles['random']){         
-           $scope.changeColor("--main",190);
-           $scope.changeColor("--second",210);
-           $scope.changeColor("--contraste",60);
-         
-           $scope.changeColor("--main2",190);
-           $scope.changeColor("--second2",210);
-           $scope.changeColor("--contraste2",60);
-           clearTimeout(timeOut);
-           timeOut = setTimeout($scope.randomPlay, 1200);        
-        }else{
-          clearTimeout(timeOut);
-        }
-    }
-
-  	$scope.changeColor = function(cssVar,offsetColor){
-	    var color = getRandomColor(offsetColor);
-      $($scope).css(cssVar, color);
-    };
-    
-    $scope.keyColor = function(){
-     
-      var left = 37;
-      var up = 38;
-      var right = 39;
-      var down = 40;
-      
-
-
-      $(document).keydown(function(e) {
-        
-      	switch(e.which) {
-          case 37:
-          //left
-          console.log("key left");
-          break;
-
-          case 38:
-          //up
-          console.log("key up");
-          $scope.reverse();
-          break;
-
-          case 39:
-          //next
-          console.log("key next");
-          break;
-
-          case 40:
-          //down
-          console.log("key down");
-          $scope.changeColor("--main-color",190);
-          $scope.changeColor("--second-color",230);
-          $scope.changeColor("--contraste-color",60);
-          break;
-
-          default: return;
-      	}
-      e.preventDefault();
-      
-    });
-      
-    }
-                          
-    $scope.reverse = function(){	
-      if(saveSecond == undefined){
-          saveSecond =  $($scope).css("--second-color");
-          saveContraste =  $($scope).css("--contraste-color");
-      }
-      console.log("resverse ",$scope.toggles['nuit']);
-      if($scope.toggles['nuit']){
-         
-         $($scope).css("--second-color", saveContraste);
-         $($scope).css("--contraste-color", saveSecond);
-      }else{
-         $($scope).css("--second-color", saveSecond);
-         $($scope).css("--contraste-color", saveContraste);
-      }
-      //$scope.toggleForce($scope,$scope.toggles['nuit'],'reverse');
-    }
-    
-    $scope.toggleForce = function(target,toggle,className){
-    	
-      if(toggle){
-        $(target, $scope).addClass(className);
-      }else{
-        $(target, $scope).removeClass(className);
-      }
-     
-    }
-    
-    $scope.toggle = function(target,param,className){
-    	
-	    param = !param;
-      $(target, $scope).toggleClass(className);     
-      return param;
- 
-    }
-    
-    $btActions.click((e) => {
-      e.preventDefault();
-      var action = $(e.currentTarget).attr('data-bt-action');
-      var actionToggleAdd = $(e.currentTarget).attr('data-bt-toggle-add');
-      var actionToggleRemove = $(e.currentTarget).attr('data-bt-toggle-remove');
-      switch(action){
-        case "reverse":
-          console.log("REVERSE");
-          $scope.toggles['nuit'] = $scope.toggle(e.currentTarget,$scope.toggles['nuit'],'active');
-          $scope.reverse();
-          
-        break;
-        case "random":
-          console.log("RANDOM");
-          
-          $scope.toggles['random'] = $scope.toggle(e.currentTarget,$scope.toggles['random'],'active');
-          $scope.randomPlay();
-       
-        break;
-        case "theme":
-          console.log("THEME");
-          $scope.toggles['theme'] = $scope.toggle(e.currentTarget,$scope.toggles['theme'],'active');
-          
-       
-        break;
-        case "change":
-          console.log("CHANGE");
-          $scope.changeColorByBt($(e.currentTarget));
-          saveSecond =  $($scope).css("--second-color");
-          saveContraste =  $($scope).css("--contraste-color");
-       
-        break;
-        default:
-      }
-      
-      if(actionToggleAdd != undefined){
-        
-        var toggleRef = actionToggleAdd.split(",")[0];
-        var newTarget = actionToggleAdd.split(",")[1];
-        var toggleClass = actionToggleAdd.split(",")[2];
-        $scope.toggleForce(newTarget,$scope.toggles[toggleRef],toggleClass);
-      }
-      
-       if(actionToggleRemove != undefined){
-        
-        var toggleRef = actionToggleRemove.split(",")[0];
-        var newTarget = actionToggleRemove.split(",")[1];
-        var toggleClass = actionToggleRemove.split(",")[2];
-        $scope.toggleForce(newTarget,!$scope.toggles[toggleRef],toggleClass);
-      }
-	    
-
-    });
-   
-    //$scope.keyColor();
-    
   	return this;
 
   },
@@ -239,7 +15,6 @@ window.WFmodules = {
     const actionToggleAdd = $($scope).attr('data-bt-toggle-add');
     const actionToggleRemove = $($scope).attr('data-bt-toggle-remove');
     const actionToggleType = $($scope).attr('data-bt-type') || 'click';
-     console.log("?? ",actionToggleType);
     var datas = null;
     var toggleSens = true;
     if(actionToggleAdd != undefined){
@@ -255,8 +30,19 @@ window.WFmodules = {
 
     }
     const active = datas[0];
+    const targetName = datas[1] || 'do'
     const target = $(datas[1], $parent) || $scope;
     const classToggle = datas[2] || active;
+    $scope.toggleKey = active+targetName;
+     
+     if(window.togglesKey[$scope.toggleKey] == undefined){
+       console.log('NEW KEY ',$scope.toggleKey);
+       window.togglesKey[$scope.toggleKey] = {};
+       window.togglesKey[$scope.toggleKey].bool = toggleSens;
+        console.log('RESULT ',window.togglesKey[$scope.toggleKey].bool);
+     }else{
+       console.log('ADD KEY ',$scope.toggleKey);
+     }
 
     
     $scope.toggles = {};
@@ -268,11 +54,13 @@ window.WFmodules = {
     });
     $scope.toggle = function(){
       
+       console.log("TOGGLE ")
+       console.log('TEST KEY ',window.togglesKey[$scope.toggleKey].bool);
        if($scope.toggles[active] == undefined){
-          $scope.toggles[active] = toggleSens;
+          $scope.toggles[active] = window.togglesKey[$scope.toggleKey].bool;
         }
-        
-        $scope.toggles[active] = !$scope.toggles[active];
+        window.togglesKey[$scope.toggleKey].bool = !window.togglesKey[$scope.toggleKey].bool;
+        $scope.toggles[active] = window.togglesKey[$scope.toggleKey].bool;
 
         $($scope).toggleClass(active);
         if($scope.toggles[active]){
@@ -280,7 +68,6 @@ window.WFmodules = {
         }else{
            target.addClass(classToggle);          
         }
-
       
         console.log("TOGGLE ",classToggle,$scope.toggles[active]);
     }
@@ -297,10 +84,7 @@ window.WFmodules = {
     var paletteReady = false;
     var urlInputPhoto = $("#imageUrl")[0] != undefined;
     var img = $("#theme-auto")[0];
-    var imgSrc = $("#theme-auto").attr('data-src') || $("#theme-auto").attr('src');
-    
-    
-    console.log('urlInputPhoto',urlInputPhoto);
+    var imgSrc = $("#theme-auto").attr('data-src') || $("#theme-auto").attr('src'); 
     var consoleCss;
     window.doautotheme = $scope;
     $scope.colors = [];
@@ -308,16 +92,11 @@ window.WFmodules = {
     if(urlInputPhoto){
         var inputUrl = $("#imageUrl");
         inputUrl.focusout(function() {
-
           $scope.forceLoad();
-
         })
     }
   
-
     $scope.getPalette = function(targetImg) {
-
-      console.log('__getPalette');
       if(paletteReady == false){
         return;
       }
@@ -329,14 +108,11 @@ window.WFmodules = {
       for ( var swatch in $scope.swatches ) {
           if ($scope.swatches.hasOwnProperty(swatch) && $scope.swatches[swatch]) {       
             $scope.colors.push($scope.swatches[swatch].getHex());
-
           }
       }
       if($scope.swatches['Vibrant'] != undefined){        
-          $scope.colors.push($scope.swatches['Vibrant'].getTitleTextColor());
-          
+          $scope.colors.push($scope.swatches['Vibrant'].getTitleTextColor());       
           var hsv = Please.HEX_to_HSV($scope.swatches['Vibrant'].getHex());
-
           result = Please.make_scheme( hsv, { 'scheme_type': 'complementary', format: 'hex' });
           var result2 = Please.make_color({
             golden: true,
@@ -353,13 +129,10 @@ window.WFmodules = {
             value:0.91,
             colors_returned: 2,
             format: 'hex'
-          });
-         
+          });  
          $scope.colors.push(result[1]);      
          $scope.colors = $.merge($scope.colors, result2);
          $scope.colors = $.merge($scope.colors, result3);
-
-
       }else{
           $scope.colors.push('#FF0000');
           console.log("__error");
@@ -367,46 +140,25 @@ window.WFmodules = {
           $scope.forceLoad();
           return;
       }
-          
-      //$('html').css("--main-color",$scope.swatches['Vibrant'].getHex());
-      //$('html').css("--second-color",$scope.swatches['Muted'].getHex());
-      //$('html').css("--contraste-color",$scope.swatches['Muted'].getTitleTextColor());
-      
        var i;
        for (i = 0; i < window.dothemes.length; ++i) {
             var cItem = window.dothemes[i];
             cItem.pushColors($scope.colors);
-       }
-        
-       //$('[data-module=dotheme]').pushColors($scope.colors);
-       // window.dotheme().pushColors($scope.colors);
-       //list.appendChild(listFragment);
-
+       }    
     }
     
-
-
-    $scope.doconsole = function(){
-      
+    $scope.doconsole = function(){    
       var i;
-      var consoleCss = ":root {<br>"
+      var consoleCss = ""
       for (i = 0; i < window.dothemes.length; ++i) {
-
           var cItem = window.dothemes[i];
-          consoleCss += cItem.getCssLine();
-         
+          consoleCss += cItem.getCssLine();     
        }
-      
-      consoleCss += "}"
-      
-      $('#console').html(consoleCss);
-      
-   
-     
+      $('#console').html(consoleCss);     
     };
 
     $scope.imageLoaded = function() {
-          console.log('__imageLoaded');
+       
           paletteReady = true;
           setTimeout(function(){
             $scope.getPalette(img);
@@ -414,16 +166,13 @@ window.WFmodules = {
           
     }
     $scope.forceLoad = function() {
-       console.log('__forceLoad ',$('#imageUrl').val() == "");
-   
+       
        var imgContainer = $('#imgContainer');
         if($('#imageUrl').val() == "" && urlInputPhoto){
             
             img.onload = $scope.imageLoaded();
         }else{
-          
-          console.log("OK2")
-          
+                 
             if(img){
                img.remove();
                img.onload = null;
@@ -489,7 +238,7 @@ window.WFmodules = {
         if(currentItem == null){
           return "null"
         }
-        return  "--"+currentItem.attr("data-bt-color")+": "+currentItem.attr("data-color")+";<br>";
+        return  "$"+currentItem.attr("data-bt-color")+"Color: "+currentItem.attr("data-color")+";<br>";
       }
     
       $scope.changeSelectedColor = function(type, color){
@@ -562,7 +311,7 @@ window.WFmodules = {
           }
         
           var currentIndex = 0;
-          var customChoice = {"main":0,"second":5,"contraste":2,"main2":6,"second2":1,"contraste2":3};
+          var customChoice = {"main":0,"second":9,"contraste":6,"extra":5};
           currentIndex = customChoice[typeC];
           
    
