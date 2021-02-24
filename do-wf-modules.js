@@ -183,9 +183,11 @@ window.WFmodules = {
             var urlImg  = $('#imageUrl').val() || imgSrc;
   
             tmpImg.crossOrigin = "anonymous";
+            console.log("OK cross");
 
-           tmpImg.addEventListener("load", function() {
-                img = tmpImg;     
+            tmpImg.addEventListener("load", function() {
+                img = tmpImg;    
+		    console.log("OK imageLoaded");
                 $scope.imageLoaded();
             } , false);
   
