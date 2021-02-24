@@ -39,9 +39,9 @@ window.WFmodules = {
        console.log('NEW KEY ',$scope.toggleKey);
        window.togglesKey[$scope.toggleKey] = {};
        window.togglesKey[$scope.toggleKey].bool = toggleSens;
-        console.log('RESULT ',window.togglesKey[$scope.toggleKey].bool);
+        //console.log('RESULT ',window.togglesKey[$scope.toggleKey].bool);
      }else{
-       console.log('ADD KEY ',$scope.toggleKey);
+       //console.log('ADD KEY ',$scope.toggleKey);
      }
 
     
@@ -54,8 +54,8 @@ window.WFmodules = {
     });
     $scope.toggle = function(){
       
-       console.log("TOGGLE ")
-       console.log('TEST KEY ',window.togglesKey[$scope.toggleKey].bool);
+       //console.log("TOGGLE ")
+      // console.log('TEST KEY ',window.togglesKey[$scope.toggleKey].bool);
        if($scope.toggles[active] == undefined){
           $scope.toggles[active] = window.togglesKey[$scope.toggleKey].bool;
         }
@@ -69,7 +69,7 @@ window.WFmodules = {
            target.addClass(classToggle);          
         }
       
-        console.log("TOGGLE ",classToggle,$scope.toggles[active]);
+       // console.log("TOGGLE ",classToggle,$scope.toggles[active]);
     }
    
 
@@ -104,7 +104,7 @@ window.WFmodules = {
       var vibrant = new Vibrant(targetImg,64,5);
       $scope.swatches = vibrant.swatches();
       $scope.colors = [];
-     // console.log('__$scope.swatches ',$scope.swatches);
+      console.log('getPalette : ',$scope.swatches);
       for ( var swatch in $scope.swatches ) {
           if ($scope.swatches.hasOwnProperty(swatch) && $scope.swatches[swatch]) {       
             $scope.colors.push($scope.swatches[swatch].getHex());
@@ -162,7 +162,7 @@ window.WFmodules = {
           paletteReady = true;
           setTimeout(function(){
             $scope.getPalette(img);
-          },0);
+          },1000);
           
     }
     $scope.forceLoad = function() {
