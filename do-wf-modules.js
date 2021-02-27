@@ -328,11 +328,13 @@ window.WFmodules = {
         });
 	    
 	if (imgDom.prop('complete')) {
+          console.log("deja load")
           $scope.imageLoaded();
 	} else {
-	   imgDom.load(function(){
-  	       $scope.imageLoaded();
-	   });
+          console.log("on load")
+          imgDom.on('load',function(){
+    	      $scope.imageLoaded();
+	  });
 	}
     }
 
