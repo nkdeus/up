@@ -159,7 +159,7 @@ window.WFmodules = {
     var $scope = this; 
     var paletteReady = false;
     var urlInput = $($scope).attr('data-do-input-url');
-    var customTarget = $($scope).attr('data-custom-target') || $scope;
+    var customTarget = $($scope).attr('data-do-custom-target') || $scope;
     var urlInputPhoto = urlInput != undefined;
     var datac = $($scope).attr('data-do-target-container');
     
