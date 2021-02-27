@@ -237,24 +237,21 @@ window.WFmodules = {
         
       }else{
             
-            var currentIndex = 0;
-            var customChoice = {"main":0,"second":5,"contraste":2,"extra":6};   
-            $.each( customChoice, function( key, value ) {
-              
-              var cssVar = "--"+key+"-color";
-              if(customTarget == "html"){
-                cssVar = "--"+key;
-              }
-              var color = $scope.colors[value];
-              //console.//"OK --> ",cssVar, color);
-              $(customTarget).css(cssVar, color);
-            });
-           
+	    var currentIndex = 0;
+	    var customChoice = {"main":0,"second":5,"contraste":2,"extra":6};   
+	    $.each( customChoice, function( key, value ) {
+
+	      var cssVar = "--"+key+"-color";
+	      if(customTarget == "html"){
+		cssVar = "--"+key;
+	      }
+	      var color = $scope.colors[value];
+	      //console.//"OK --> ",cssVar, color);
+	      $(customTarget).css(cssVar, color);
+	    });
+	      
       }
-    
-      
-   
-      
+
     }
     
     $scope.doconsole = function(){    
@@ -327,11 +324,16 @@ window.WFmodules = {
     }else{
        
         $($scope).click(function() {
-           console.log("imageLoaded");
            $scope.imageLoaded();
         });
-      $scope.imageLoaded();
-      //$scope.forceLoad();
+	    
+	if (imgDom.prop('complete')) {
+          $scope.imageLoaded();
+	} else {
+	   imgDom.load(function(){
+  	       $scope.imageLoaded();
+	   });
+	}
     }
 
     return $scope;
