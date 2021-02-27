@@ -1,8 +1,84 @@
+
 /* Start Head code */
 window.WFmodules = {
   docolor: function() {
 
   	return this;
+
+  },
+  dowtf: function() {
+    
+     const $scope = this;
+     $scope.max = $($scope).attr('data-do-max') || 6;
+     $scope.space = $($scope).attr('data-do-space') || 2;
+     $scope.itemClass = $($scope).attr('data-do-wtf') || 'do-wtf-item';
+     $scope.gap = $($scope).attr('data-do-gap') || '1px';
+     $scope.force = $($scope).attr('data-do-force') || 5;
+     $scope.blend = $($scope).attr('data-do-blend') || 'screen';
+     $scope.random = [];
+     $scope.random = $($scope).attr('data-do-tween').split(",");
+     //console.log($scope.random);
+    
+     $scope.getParams = function(){
+         let gsapParams = {duration:20,ease:'power3.inOut'};
+         $.each($scope.random, function(index, value) {
+          
+            if(value == "scale" || value == "scaleX" || value == "scaleY" || value == "opacity"){
+               gsapParams[value] = "random(0,"+(0.2*$scope.force)+")";
+            }
+            if(value == "x" || value == "y"){
+               gsapParams[value] = "random(0,"+(20*$scope.force)+")";
+            }
+            if(value == "rotation" ||value == "rotationX" || value == "rotationY" || value == "rotationZ"){
+               gsapParams[value] = "random(0,"+(10*$scope.force)+")";
+            }
+
+         });
+        return gsapParams;
+     }
+ 
+    
+    //gsap.set(item,{opacity:0,x:"random(0,50)", y:"random(0,50)"});
+     $($scope).css('position',$($scope).attr('data-do-position') || 'relative');
+    
+     var containerItems = $("<div>");
+     containerItems.addClass('do-grid-wtf');
+     containerItems.css("mix-blend-mode", $scope.blend);
+     var columns = Math.floor($scope.max/$scope.space);
+     var cssRepeat = "repeat("+columns+", 1fr)";
+     containerItems.css("grid-template-columns",cssRepeat);
+     containerItems.css("gap",$scope.gap);
+     //console.log(cssRepeat);
+
+      
+     $scope.append(containerItems[0]);
+     var tl = gsap.timeline({yoyo:true,repeat:5});
+ 
+     $scope.creatWtf = function(){
+       
+         let item = $("<li></li>");
+         item.addClass($scope.itemClass);
+         containerItems.append(item[0]);
+         gsap.set(item,$scope.getParams());
+         tl.to(item,$scope.getParams(),0)
+         return item;
+          
+     }  
+     var wtfItems = [];
+    
+     for (var i = 0; i < $scope.max; i++) {
+        
+         wtfItems.push($scope.creatWtf());
+         
+     }
+    
+      
+      
+
+  },
+   dofaker: function() {
+    
+     const $scope = this;
 
   },
    dotoggle:function(){
@@ -36,7 +112,7 @@ window.WFmodules = {
     $scope.toggleKey = active+targetName;
      
      if(window.togglesKey[$scope.toggleKey] == undefined){
-       console.log('NEW KEY ',$scope.toggleKey);
+       //console.log('NEW KEY ',$scope.toggleKey);
        window.togglesKey[$scope.toggleKey] = {};
        window.togglesKey[$scope.toggleKey].bool = toggleSens;
         //console.log('RESULT ',window.togglesKey[$scope.toggleKey].bool);
@@ -55,7 +131,7 @@ window.WFmodules = {
     $scope.toggle = function(){
       
        //console.log("TOGGLE ")
-      // console.log('TEST KEY ',window.togglesKey[$scope.toggleKey].bool);
+       //console.log('TEST KEY ',window.togglesKey[$scope.toggleKey].bool);
        if($scope.toggles[active] == undefined){
           $scope.toggles[active] = window.togglesKey[$scope.toggleKey].bool;
         }
@@ -69,7 +145,7 @@ window.WFmodules = {
            target.addClass(classToggle);          
         }
       
-       // console.log("TOGGLE ",classToggle,$scope.toggles[active]);
+        //console.log("TOGGLE ",classToggle,$scope.toggles[active]);
     }
    
 
@@ -82,15 +158,25 @@ window.WFmodules = {
     
     var $scope = this; 
     var paletteReady = false;
-    var urlInputPhoto = $("#imageUrl")[0] != undefined;
-    var img = $("#theme-auto")[0];
-    var imgSrc = $("#theme-auto").attr('data-src') || $("#theme-auto").attr('src'); 
+    var urlInput = $($scope).attr('data-do-input-url');
+    var customTarget = $($scope).attr('data-custom-target') || $scope;
+    var urlInputPhoto = urlInput != undefined;
+    var datac = $($scope).attr('data-do-target-container');
+    
+    var imgContainer = datac || $($scope);
+    var imgDom = $("img",imgContainer);
+    var img = imgDom[0];
+    var imgSrc = imgDom.attr('data-src') || imgDom.attr('src'); 
+
     var consoleCss;
-    window.doautotheme = $scope;
+    if(window.doautotheme == null){
+       window.doautotheme = $scope;
+    }
+   
     $scope.colors = [];
     
     if(urlInputPhoto){
-        var inputUrl = $("#imageUrl");
+        var inputUrl = $(urlInput);
         inputUrl.focusout(function() {
           $scope.forceLoad();
         })
@@ -104,10 +190,10 @@ window.WFmodules = {
       var vibrant = new Vibrant(targetImg,64,5);
       $scope.swatches = vibrant.swatches();
       $scope.colors = [];
-      console.log('getPalette : ',$scope.swatches);
+      // console.log('__$scope.swatches ',$scope.swatches);
       for ( var swatch in $scope.swatches ) {
           if ($scope.swatches.hasOwnProperty(swatch) && $scope.swatches[swatch]) {       
-            $scope.colors.push($scope.swatches[swatch].getHex());
+             $scope.colors.push($scope.swatches[swatch].getHex());
           }
       }
       if($scope.swatches['Vibrant'] != undefined){        
@@ -134,17 +220,41 @@ window.WFmodules = {
          $scope.colors = $.merge($scope.colors, result2);
          $scope.colors = $.merge($scope.colors, result3);
       }else{
-          $scope.colors.push('#FF0000');
-          console.log("__error");
+
+          console.log("__error :/");
           $scope.colors = [];
-          $scope.forceLoad();
+          //$scope.forceLoad();
           return;
       }
-       var i;
-       for (i = 0; i < window.dothemes.length; ++i) {
-            var cItem = window.dothemes[i];
-            cItem.pushColors($scope.colors);
-       }    
+      var i;
+      //console.log("window.dothemes : ",window.dothemes);
+      if(window.dothemes != null && customTarget == "html"){
+          
+           for (i = 0; i < window.dothemes.length; ++i) {
+                var cItem = window.dothemes[i];
+                cItem.pushColors($scope.colors);
+           } 
+        
+      }else{
+            
+            var currentIndex = 0;
+            var customChoice = {"main":0,"second":5,"contraste":2,"extra":6};   
+            $.each( customChoice, function( key, value ) {
+              
+              var cssVar = "--"+key+"-color";
+              if(customTarget == "html"){
+                cssVar = "--"+key;
+              }
+              var color = $scope.colors[value];
+              //console.//"OK --> ",cssVar, color);
+              $(customTarget).css(cssVar, color);
+            });
+           
+      }
+    
+      
+   
+      
     }
     
     $scope.doconsole = function(){    
@@ -154,23 +264,24 @@ window.WFmodules = {
           var cItem = window.dothemes[i];
           consoleCss += cItem.getCssLine();     
        }
-      $('#console').html(consoleCss);     
+       $('#console').html(consoleCss);     
     };
 
     $scope.imageLoaded = function() {
        
-          paletteReady = true;
-          setTimeout(function(){
-            $scope.getPalette(img);
-          },1000);
+      paletteReady = true;
+      setTimeout(function(){
+        $scope.getPalette(img);
+      },0);
           
     }
+    
     $scope.forceLoad = function() {
-       
-       var imgContainer = $('#imgContainer');
-        if($('#imageUrl').val() == "" && urlInputPhoto){
-            
+
+        if($(urlInput).val() == "" && urlInputPhoto){
+             console.log("$scope.imageLoaded()");
             img.onload = $scope.imageLoaded();
+         
         }else{
                  
             if(img){
@@ -180,19 +291,17 @@ window.WFmodules = {
             }
            
             var tmpImg = new Image();
-            var urlImg  = $('#imageUrl').val() || imgSrc;
+            var urlImg  = $(urlInput).val() || imgSrc;
   
             tmpImg.crossOrigin = "anonymous";
-            console.log("OK cross");
 
             tmpImg.addEventListener("load", function() {
-                img = tmpImg;    
-		    console.log("OK imageLoaded");
+                img = tmpImg;     
                 $scope.imageLoaded();
-            } , false);
+            }, false);
   
             tmpImg.src = urlImg;
-            imgContainer.html(tmpImg);
+            $(imgContainer).html(tmpImg);
           
         }
     
@@ -204,20 +313,25 @@ window.WFmodules = {
     
     if(urlInputPhoto){
       
-        $('.hero-grid').click((e) => {    
+
+        $($scope).click(function() {
           var R = window.innerWidth-Math.floor(window.innerWidth/10)-Math.floor(Math.random()*10);
-          $('#imageUrl').val(imgSrc+R.toString());
-          e.preventDefault();
-          $scope.forceLoad();         
+          $(urlInput).val(imgSrc+R.toString());    
+          $scope.forceLoad();  
         });
       
         var R = window.innerWidth-Math.floor(window.innerWidth/10)-Math.floor(Math.random()*10);
-        $('#imageUrl').val(imgSrc+R.toString());
+        $(urlInput).val(imgSrc+R.toString());
         $scope.forceLoad();
       
     }else{
-       console.log("OK");
-      $scope.forceLoad();
+       
+        $($scope).click(function() {
+           console.log("imageLoaded");
+           $scope.imageLoaded();
+        });
+      $scope.imageLoaded();
+      //$scope.forceLoad();
     }
 
     return $scope;
@@ -246,10 +360,9 @@ window.WFmodules = {
       $scope.changeSelectedColor = function(type, color){
        
         var cssVar = "--"+type;
+        console.log(cssVar);
         if($($scope).attr("data-custom-target") != undefined){
             $($($scope).attr("data-custom-target")).css(cssVar, color);
-        }else{
-            $('[data-module=docolor]').css(cssVar, color);
         }
        
       };
@@ -313,7 +426,8 @@ window.WFmodules = {
           }
         
           var currentIndex = 0;
-          var customChoice = {"main":0,"second":9,"contraste":6,"extra":5};
+          //var customChoice = {"main":0,"second":9,"contraste":6,"extra":5};
+          var customChoice = {"main":0,"second":5,"contraste":2,"extra":6};  
           currentIndex = customChoice[typeC];
           
    
@@ -555,4 +669,3 @@ window.WFmodules = {
   }
   /* END DO-CHANGE */
 }
-/* End Head code */
