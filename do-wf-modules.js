@@ -6,6 +6,51 @@ window.WFmodules = {
   	return this;
 
   },
+  dopara: function(){
+     
+     var $scope = this; 
+     $scope.target = $($scope).attr("data-do-target") || $scope;
+     $scope.force = $($scope).attr('data-do-force') || 5;
+     $scope.scrub = Number($($scope).attr('data-do-scrub')) || true;
+     $scope.start = $($scope).attr('data-do-start') || "top top";
+     $scope.end = $($scope).attr('data-do-end') || "bottom top";
+     $scope.tweens = [];
+     $scope.tweens = $($scope).attr('data-do-tween').split(",");
+     
+     $scope.getParams = function(deph){
+         let gsapParams = {
+           ease:'none',
+           scrollTrigger: {
+              trigger: $($scope),
+              start: $scope.start,
+              end: $scope.end,
+              scrub: $scope.scrub
+            }     
+         };
+         $.each($scope.tweens, function(index, value) {      
+            if(value == "scale" || value == "scaleX" || value == "scaleY" || value == "opacity"){
+               gsapParams[value] = 0.11*$scope.force*deph;
+            }
+            if(value == "in"){
+               gsapParams["opacity"] = 1;
+            }
+            if(value == "out"){
+               gsapParams["opacity"] = 0;
+            }
+            if(value == "x" || value == "y"){
+               gsapParams[value] = 42*$scope.force*deph;
+            }
+            if(value == "rotation" ||value == "rotationX" || value == "rotationY" || value == "rotationZ"){
+               gsapParams[value] = 1*$scope.force*deph;
+            }
+         });
+        return gsapParams;
+     }
+     $($scope.target,$scope).each((i, el) => {
+          let deph = Number($(el).attr('data-do-deph')) || 1+ 0.1*i;
+          gsap.to(el, $scope.getParams(deph));
+     });
+  },
   dowtf: function() {
     
      const $scope = this;
